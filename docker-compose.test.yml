@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  goassets-test:
+    container_name: go_assets_test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./:/app
+    depends_on:
+      - goassets-mysql-test
+
+  goassets-mysql-test:
+    image: mysql:5.7
+    container_name: go_assets_mysql_test
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_HOST=goassets-mysql-test
+      - MYSQL_USER=gouser
+      - MYSQL_PASSWORD=goPathword
+      - MYSQL_DATABASE=test_goassets
+      - MYSQL_ROOT_PASSWORD=goPathword
+    restart: unless-stopped
+    volumes:
+      - database_mysql_test:/var/lib/mysql
+
+volumes:
+  database_mysql_test:
