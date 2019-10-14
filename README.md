@@ -43,13 +43,10 @@ Enable or disable orm debug verbosity
 ```
 DATABASE_DEBUG=enabled
 ```
-Enable or disable jwt authentication (enabled|disabled)
-```
-JWT_AUTH=disabled
-```
+
 
 ### Run 
-#####(Non Docker)
+#### (Non Docker)
 Install mysql - follow the instructions:
 
 * [installing-mysql-server-on-ubuntu](https://support.rackspace.com/how-to/installing-mysql-server-on-ubuntu/)
@@ -60,14 +57,14 @@ go run main.go
 ```
 The first time the main function runs, the database is created and the migrations are applied (gorm style)
 
-#####(Docker)
+#### (Docker)
 Ensure no other application running on 3306 and 8000
 ```
 docker-compose up
 ```
 
 ### Application Playground Steps
-#####Register user
+#### Register user
 ```
 curl -X POST \
   http://localhost:8000/api/user/register \
@@ -79,7 +76,7 @@ curl -X POST \
 	"password": "%(123456)"
 }'
 ```
-#####Login user
+#### Login user
 ```
 curl -X POST http://localhost:8000/api/user/login \
   -H 'Content-Type: application/json' \
@@ -90,21 +87,21 @@ curl -X POST http://localhost:8000/api/user/login \
 }'
 ```
 INFO: Copy the jwt token from Login Response and replace wherever <jwt> with it in the following curls
-or disable JWT_AUTH and remove  "-H 'Authorization: Bearer <jwt>' \" from curls
 
-#####Populate database 
+
+#### Populate database 
 
 with dummy assets from sample/data.json (This endpoint is only for demonstrating purposes)
 ```
 curl -X POST \
   http://localhost:8000/populate/assets \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsImV4cCI6MTU3MTA1MTE0MX0.RYP19dT_RXRheUHdBuHPnnkwqpx9y2PQ0seKRlD-TIg' \
+  -H 'Authorization: Bearer <jwt>' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{	
 }'
 ```
-#####Get all Assets
+#### Get all Assets
 ```
 curl -X GET \
   http://localhost:8000/api/assets \
@@ -112,16 +109,16 @@ curl -X GET \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache'
 ```
-#####Mark 4 Assets as Favorites
+#### Mark 4 Assets as Favorites
 ```
 curl -X POST \
   http://localhost:8000/api/assets/favorites \
-  -H 'Authorization: Bearer <jwt>>' \
+  -H 'Authorization: Bearer <jwt>' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '[1,2,4,5]'
 ```
-#####UnMark 1 and 4 From Favorites
+#### UnMark 1 and 4 From Favorites
 ```
 curl -X DELETE \
   http://localhost:8000/api/assets/favorites \
@@ -130,14 +127,14 @@ curl -X DELETE \
   -H 'cache-control: no-cache' \
   -d '[1,4]'
 ```
-#####User deletes softly 2
+#### User deletes softly 2
 ```
 curl -X DELETE \
   http://localhost:8000/api/assets/2 \
   -H 'Authorization: Bearer <jwt>' \
   -H 'cache-control: no-cache'
 ``` 
-#####Update description of Asset 5
+#### Update description of Asset 5
 ```
 curl -X PUT \
   http://localhost:8000/api/assets/5 \
@@ -148,7 +145,7 @@ curl -X PUT \
 	"desc": "other_description"
 }'
 ```
-#####Get Asset by ID
+#### Get Asset by ID
 ```
 curl -X GET \
   http://localhost:8000/api/assets/5 \
@@ -156,12 +153,12 @@ curl -X GET \
   -H 'cache-control: no-cache'
 ```
 ### Running the tests
-#####(Non Docker version)
+#### (Non Docker version)
 edit .env.test.local according to your mysql settings
 ```
 go test -v
 ```
-#####(Docker-Compose version)
+#### (Docker-Compose version)
 Ensure no other application running on 3306
 ```
 docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
