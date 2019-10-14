@@ -1,0 +1,31 @@
+[
+  {
+    "type" : "chart",
+    "desc" : "desc1",
+    "data" : {"assetData" : [20, 30, 40, 10]}
+  },
+  {
+    "type" : "insight",
+    "desc" : "desc2",
+    "data" : {"assetData" : "bla bla bla bla"}
+  },
+  {
+    "type" : "insight",
+    "desc" : "desc3",
+    "data" : {"assetData" : "blu blu blu blu"}
+  },
+  {
+    "type" : "audience",
+    "desc" : "desc4",
+    "data" : {
+      "assetData": {"gender" : {"male": 22, "female":  78}}
+    }
+  },
+  {
+    "type" : "audience",
+    "desc" : "desc5",
+    "data" : {
+      "assetData": {"gender" : {"male": 60, "female":  40}}
+    }
+  }
+]
